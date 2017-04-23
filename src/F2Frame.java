@@ -9,13 +9,21 @@ public class F2Frame extends JFrame {
 	private String keepBefore = "";
 	private String keepAfter = "";
 	private JPanel dieOne;
+	
+	ArrayList<Integer> scorecard = new ArrayList<Integer>(13);
 
 	int flag = 0;
+	int bet = 0;
 
 	Scorecard score = new Scorecard();
 
 	public F2Frame() {
-		setSize(600, 400);
+		
+		for (int j = 0; j < 13; j++){
+			scorecard.add(0);
+		}
+		
+		setSize(700, 500);
 		ImageIcon OG;
 		ImageIcon icon = new ImageIcon(getClass().getResource("1.png"));
 		ImageIcon icon2 = new ImageIcon(getClass().getResource("2.png"));
@@ -117,23 +125,22 @@ public class F2Frame extends JFrame {
 		JComboBox options = new JComboBox(lines);
 		options.setRenderer(new MyComboBoxRenderer("BETTING LINE"));
 		options.setSelectedIndex(-1); // automatically sets choice to -1
-
-		for (int i = 0; i < 13; i++) {
-			if (options.getSelectedIndex() == i) {
-				lines[i] = "this line has been filled";
-			}
-		}
+		
+		
+		
 
 		String betAmount = JOptionPane.showInputDialog(null, "How much would you like to bet?");
+		
 
-		int bet = Integer.parseInt(betAmount); // gets int value of player's bet
+		bet = Integer.parseInt(betAmount); // gets int value of player's bet
 
-		int totalmoney = Scorecard.money;
+		int totalmoney = score.money;
 
 		while (bet > totalmoney && bet < 0) {
 			betAmount = JOptionPane.showInputDialog(null, "How much would you like to bet?");
 			bet = Integer.parseInt(betAmount);
 		}
+		
 		dieOne = new JPanel();
 		dieOne.add(one);
 		dieOne.add(two);
@@ -153,10 +160,44 @@ public class F2Frame extends JFrame {
 		three.addActionListener(Three);
 		four.addActionListener(Four);
 		five.addActionListener(Five);
+		
+		options.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event){
+				for(int l = 0; l < 13; l++){
+					if (options.getSelectedIndex() == l){
+						Scorecard.upperSection(hand, numOfDie, 6, bet, l);
+						Scorecard.lowerSection(hand, 6, numOfDie, bet, l);
+						System.out.println(Scorecard.scoreRecord.get(l));
+						scorecard.add(l, Scorecard.scoreRecord.get(l));
+					}
+				}
+
+				for (int i = 0; i < 13; i++) {
+					if (options.getSelectedIndex() == i) {
+						lines[i] = "this line has been filled";
+					}
+				}
+			}
+		});
 
 		roll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				flag += 1;
+				
+				if (flag <= 2){
+					flag++;
+				}
+
+				JLabel scoremoney = new JLabel("Current Money");
+				JPanel showscore = new JPanel();
+				
+				if (flag > 2){
+					JOptionPane.showInputDialog(null, "The hand has ended. You have $" + score.money);
+					
+					flag = 0;
+				}
+				
+				
 				myHand.keepHand(keepThis);
 				keepThis = "nnnnn";
 				myHand.setCurrentHand(6);
@@ -242,16 +283,7 @@ public class F2Frame extends JFrame {
 					OG = icon6;
 				}
 				five.setIcon(OG);
-
-				JLabel scoremoney = new JLabel("Current Money");
-				JPanel showscore = new JPanel();
-
-				if (flag == 3) {
-					scoremoney.setText("You have $" + score.money);
-					showscore.add(scoremoney);
-					add(showscore);
-					int flag = 0;
-				}
+				
 			}
 
 		});

@@ -16,6 +16,7 @@ public class Hand {
 	 */
 	
 	Scorecard score = new Scorecard();
+	
 	public Hand() {
 		numOfTurnsLeft = 0; // default
 		numOfDie = 0;
