@@ -1,0 +1,225 @@
+
+import java.util.ArrayList;
+/**
+ * @author Lauren Weiser, Emma Delucchi, Katrina Baber
+The Scorecard class uses the hand from the user's Yahtzee game to
+calculate the user's score on each line of the scorecard and display it
+*/
+public class Scorecard {
+	
+	static int money = 0;
+    /**
+     initializes the Scorecard class
+     */
+    public Scorecard() {
+    }
+    
+    /**
+     * calculates total score of upper section and prints
+     * scores of each line
+     @param array containing the player's hand, number of dice, number of sides
+     @returns total upper section score
+     */
+    public int upperSection(ArrayList<Dice> hand, int numOfDie, int numOfSides, int BET, int lineBet) {
+       int won = 0;
+       for (int dieValue = 1; dieValue <= numOfSides; dieValue++){ //num of sides + 1
+            int currentCount = 0;
+            for (int diePosition = 0; diePosition < numOfDie - 1; diePosition++){ //num of sides
+                if (hand.get(diePosition).getRoll() == dieValue)
+                    currentCount++;
+            }
+        if (dieValue == lineBet) {
+            won = dieValue*currentCount*BET;
+            money += won;
+        }
+        }
+        return won;
+       
+    }
+    
+    /**
+     * calculates total score of lower section
+     @param array containing the player's hand, number of sides, number of dice
+     @return total lower section score
+     */
+    public int lowerSection(ArrayList<Dice> hand, int numOfSides, int numOfDie, int BET, int betline) {
+        int won = 0;
+        int start = numOfDie + 1;
+        if (betline == start) {
+            won = threeOfAKind(hand, numOfDie, numOfSides, BET);
+            money += won;
+        } else if (betline == start + 1) {
+            won = fourOfAKind(hand, numOfDie, numOfSides, BET);
+            money += won;
+        } else if (betline == start + 2) {
+            won = scoreFullHouse(hand, numOfSides, numOfDie, BET);
+            money += won;
+        } else if (betline == start + 3) {
+            won = smallStraight(hand, numOfDie, BET);
+            money += won;
+        } else if (betline == start + 4) {
+            won = largeStraight(hand, numOfDie, BET);
+            money += won;
+        } else {
+            won = YAHTZEE(hand, numOfDie, BET);//Yahtzee!!
+            money += won;
+        }
+        return won;
+    }
+    
+    /**
+     * calculates and displays score for three of a kind line
+     @param array containing the player's hand, number of dice, number of sides
+     @return score for that line
+     */
+    public int threeOfAKind(ArrayList<Dice> hand, int numOfDie, int numOfSides, int BET) {
+        int numSame = 0;
+        for (int placeHolder = 0; placeHolder < numOfDie - 1; placeHolder++) { //numOfDie - 1 = 4
+            if (hand.get(placeHolder).getRoll() == (hand.get(placeHolder + 1).getRoll())) {
+                numSame += 1;
+            } else {
+                if (numSame < 3){ //if they already have 3 they don't need more in order
+                    numSame = 0;
+                }   
+            }
+        }
+        if (numSame >= 3) {
+            return BET*2;
+        } else {
+            return 0;
+        }
+    }
+    
+    
+    /**
+     * calculates and displays score for four of a kind line
+     @param array containing the player's hand, number of dice, number of sides
+     @return score for that line
+     */
+    public int fourOfAKind(ArrayList<Dice> hand, int numOfDie, int numOfSides, int BET) {
+        int numSame = 0;
+        for (int placeHolder = 0; placeHolder < numOfDie - 1; placeHolder++) { //numof die - 1 = 4
+            if (hand.get(placeHolder).getRoll() == (hand.get(placeHolder + 1).getRoll())) {
+                numSame += 1;
+            } else {
+                if (numSame < 4){ //if they already have 4 they dont need more in order
+                    numSame = 0;
+                }   
+            }
+        }
+        if (numSame >= 4) {
+            return BET*2;
+        } else {
+            return 0;
+        }
+    }
+    
+    
+    /**
+     * calculates and displays score for full house line
+     @param array containing the player's hand, number of sides, number of die
+     @return score for that line
+     */
+    public int scoreFullHouse(ArrayList<Dice> hand, int numOfSides, int numOfDie, int BET) {
+        int currentCount = 0;
+        boolean threeOfKindFound = false;
+        boolean twoOfKindFound = false;
+        boolean greaterKind = false;
+        for (int dieValue = 1; dieValue <= numOfSides; dieValue++) { //num of sides = 6
+            for (int diePosition = 0; diePosition < numOfDie; diePosition++) //num of die = 5
+            {
+                if (hand.get(diePosition).getRoll() == dieValue){
+                    currentCount += 1;
+                }
+            }
+            if (currentCount == 3) {
+                threeOfKindFound = true;
+            }
+            if (currentCount == 2) {
+                twoOfKindFound = true;
+            }
+            if (currentCount >= 5) {
+                greaterKind = true;
+            }
+            currentCount = 0;
+        }
+        if ((threeOfKindFound && twoOfKindFound) || greaterKind) {
+            return 2*BET;
+        } else {
+            return 0;
+        }
+    }
+    
+    /**
+     * calculates and displays score for small straight line
+     @param array containing the player's hand, number of dice
+     @return score for that line
+     */
+    public int smallStraight(ArrayList<Dice> hand, int numOfDie, int BET) {
+        int numInOrder = 0;
+        for (int placeHolder = 0; placeHolder < numOfDie - 1; placeHolder++) { //numofDie - 1 = 4
+            if (hand.get(placeHolder).getRoll() == (hand.get(placeHolder + 1).getRoll()-1)) {
+                numInOrder += 1;
+            } else if (hand.get(placeHolder).getRoll() == (hand.get(placeHolder + 1).getRoll())) {
+                numInOrder += 0; //nothing happens
+            } else {
+                if (numInOrder < 3){ //if they already have 4 they dont need more in order
+                    numInOrder = 0;
+                }
+            }
+        }
+        if (numInOrder >= 3) {
+            return 3*BET;
+        } else {
+            return 0;
+        }
+    }
+    
+    /**
+     * calculates and displays score for large straight line
+     @param array containing the player's hand, number of die
+     @return score for that line
+     */
+    public int largeStraight(ArrayList<Dice> hand, int numOfDie, int BET) {
+        int numInOrder = 0;
+        for (int placeHolder = 0; placeHolder < numOfDie - 1; placeHolder++) { //numOfDie - 1 = 4
+            if (hand.get(placeHolder).getRoll() != (hand.get(placeHolder + 1).getRoll()-1)) {
+                if (hand.get(placeHolder).getRoll() == (hand.get(placeHolder + 1).getRoll())) {
+                    numInOrder += 0; //nothing happens
+                } else {
+                    numInOrder = 0; //sets zero if any not in order
+                }
+            } else {
+                numInOrder += 1;
+            }
+        }
+        if (numInOrder >= 4) {
+            return 4*BET;
+        } else {
+            return 0;
+        }
+    }
+    
+    
+    /**
+     * calculates and displays score for yahtzee line
+     @param array containing the player's hand, number of die
+     @return score for that line
+     */
+    public int YAHTZEE(ArrayList<Dice> hand, int numOfDie, int BET) {
+        boolean YAHTZEE = true;
+        //ASSUME LIST IS SORTED
+        for (int placeHolder = 0; placeHolder < numOfDie - 1; placeHolder++) { //numOfDie - 1 = 4
+            if (hand.get(placeHolder).getRoll() != (hand.get(placeHolder + 1).getRoll())) {
+                YAHTZEE = false; //sets zero if any not in order
+            }
+        }
+        if (YAHTZEE) {
+            return 10*BET;
+        } else {
+            return 0;
+        }
+    }
+    
+    
+}
