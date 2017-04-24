@@ -14,6 +14,7 @@ public class F2Frame extends JFrame {
 
 	int flag = 0;
 	int bet = 0;
+	int line = 0;
 
 	Scorecard score = new Scorecard();
 
@@ -120,19 +121,26 @@ public class F2Frame extends JFrame {
 		}
 		JButton five = new JButton(OG);
 		JButton roll = new JButton("re-roll!!");
+		/**
 		String[] lines = { "1", "2", "3", "4", "5", "6", "3 of a kind", "4 of a kind", "full house", "small straight",
 				"large straight", "yahtzee" };
 		JComboBox options = new JComboBox(lines);
 		options.setRenderer(new MyComboBoxRenderer("BETTING LINE"));
-		options.setSelectedIndex(-1); // automatically sets choice to -1
+		options.setSelectedIndex(-1); // automatically sets choice to -1 **/
 		
 		
 		
 
 		String betAmount = JOptionPane.showInputDialog(null, "How much would you like to bet?");
+		String lineBet = JOptionPane.showInputDialog(null, "Which line (1-13) would you like to bet on?");
+		
+		bet = Integer.parseInt(betAmount); // gets int value of player's bet
+		line = Integer.parseInt(lineBet);
+		
+		
 		
 
-		bet = Integer.parseInt(betAmount); // gets int value of player's bet
+		
 
 		int totalmoney = score.money;
 
@@ -141,6 +149,7 @@ public class F2Frame extends JFrame {
 			bet = Integer.parseInt(betAmount);
 		}
 		
+		
 		dieOne = new JPanel();
 		dieOne.add(one);
 		dieOne.add(two);
@@ -148,7 +157,7 @@ public class F2Frame extends JFrame {
 		dieOne.add(four);
 		dieOne.add(five);
 		dieOne.add(roll);
-		dieOne.add(options);
+		//dieOne.add(options);
 		add(dieOne);
 		ColorAction One = new ColorAction(1);
 		ColorAction Two = new ColorAction(2);
@@ -161,7 +170,7 @@ public class F2Frame extends JFrame {
 		four.addActionListener(Four);
 		five.addActionListener(Five);
 		
-		options.addActionListener(new ActionListener(){
+		/**options.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event){
 				for(int l = 0; l < 13; l++){
 					if (options.getSelectedIndex() == l){
@@ -178,7 +187,7 @@ public class F2Frame extends JFrame {
 					}
 				}
 			}
-		});
+		}); **/
 
 		roll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
@@ -192,8 +201,17 @@ public class F2Frame extends JFrame {
 				JPanel showscore = new JPanel();
 				
 				if (flag > 2){
+					for(int l = 0; l < 13; l++){
+						if (line == l){
+							Scorecard.upperSection(hand, numOfDie, 6, bet, l);
+							Scorecard.lowerSection(hand, 6, numOfDie, bet, l);
+							scorecard.add(l, Scorecard.scoreRecord.get(l));
+						}
+					}
 					JOptionPane.showInputDialog(null, "The hand has ended. You have $" + score.money);
 					
+					String lineBet = JOptionPane.showInputDialog(null, "Which line (1-13) would you like to bet on?");
+					line = Integer.parseInt(lineBet);
 					flag = 0;
 				}
 				
