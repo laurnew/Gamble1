@@ -17,6 +17,7 @@ public class F2Frame extends JFrame {
 	int line = 0;
 
 	Scorecard score = new Scorecard();
+	Dice dice = new Dice();
 
 	public F2Frame() {
 		
@@ -121,12 +122,8 @@ public class F2Frame extends JFrame {
 		}
 		JButton five = new JButton(OG);
 		JButton roll = new JButton("re-roll!!");
-		/**
-		String[] lines = { "1", "2", "3", "4", "5", "6", "3 of a kind", "4 of a kind", "full house", "small straight",
-				"large straight", "yahtzee" };
-		JComboBox options = new JComboBox(lines);
-		options.setRenderer(new MyComboBoxRenderer("BETTING LINE"));
-		options.setSelectedIndex(-1); // automatically sets choice to -1 **/
+		
+		JButton newHand = new JButton("start a new hand");
 		
 		
 		
@@ -157,7 +154,7 @@ public class F2Frame extends JFrame {
 		dieOne.add(four);
 		dieOne.add(five);
 		dieOne.add(roll);
-		//dieOne.add(options);
+		dieOne.add(newHand);
 		add(dieOne);
 		ColorAction One = new ColorAction(1);
 		ColorAction Two = new ColorAction(2);
@@ -170,24 +167,95 @@ public class F2Frame extends JFrame {
 		four.addActionListener(Four);
 		five.addActionListener(Five);
 		
-		/**options.addActionListener(new ActionListener(){
+		newHand.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event){
-				for(int l = 0; l < 13; l++){
-					if (options.getSelectedIndex() == l){
-						Scorecard.upperSection(hand, numOfDie, 6, bet, l);
-						Scorecard.lowerSection(hand, 6, numOfDie, bet, l);
-						System.out.println(Scorecard.scoreRecord.get(l));
-						scorecard.add(l, Scorecard.scoreRecord.get(l));
-					}
+				myHand.keepHand(keepThis);
+				keepThis = "nnnnn";
+				myHand.setCurrentHand(6);
+				ArrayList<Dice> hand = myHand.returnHand();
+				ImageIcon OG;
+				Dice t1 = hand.get(0);
+				int num1 = t1.getRoll();
+				if (num1 == 1) {
+					OG = icon;
+				} else if (num1 == 2) {
+					OG = icon2;
+				} else if (num1 == 3) {
+					OG = icon3;
+				} else if (num1 == 4) {
+					OG = icon4;
+				} else if (num1 == 5) {
+					OG = icon5;
+				} else {
+					OG = icon6;
 				}
-
-				for (int i = 0; i < 13; i++) {
-					if (options.getSelectedIndex() == i) {
-						lines[i] = "this line has been filled";
-					}
+				one.setIcon(OG);
+				Dice t2 = hand.get(1);
+				int num2 = t2.getRoll();
+				if (num2 == 1) {
+					OG = icon;
+				} else if (num2 == 2) {
+					OG = icon2;
+				} else if (num2 == 3) {
+					OG = icon3;
+				} else if (num2 == 4) {
+					OG = icon4;
+				} else if (num2 == 5) {
+					OG = icon5;
+				} else {
+					OG = icon6;
 				}
+				two.setIcon(OG);
+				Dice t3 = hand.get(2);
+				int num3 = t3.getRoll();
+				if (num3 == 1) {
+					OG = icon;
+				} else if (num3 == 2) {
+					OG = icon2;
+				} else if (num3 == 3) {
+					OG = icon3;
+				} else if (num3 == 4) {
+					OG = icon4;
+				} else if (num3 == 5) {
+					OG = icon5;
+				} else {
+					OG = icon6;
+				}
+				three.setIcon(OG);
+				Dice t4 = hand.get(3);
+				int num4 = t4.getRoll();
+				if (num4 == 1) {
+					OG = icon;
+				} else if (num4 == 2) {
+					OG = icon2;
+				} else if (num4 == 3) {
+					OG = icon3;
+				} else if (num4 == 4) {
+					OG = icon4;
+				} else if (num4 == 5) {
+					OG = icon5;
+				} else {
+					OG = icon6;
+				}
+				four.setIcon(OG);
+				Dice t5 = hand.get(4);
+				int num5 = t5.getRoll();
+				if (num5 == 1) {
+					OG = icon;
+				} else if (num5 == 2) {
+					OG = icon2;
+				} else if (num5 == 3) {
+					OG = icon3;
+				} else if (num5 == 4) {
+					OG = icon4;
+				} else if (num5 == 5) {
+					OG = icon5;
+				} else {
+					OG = icon6;
+				}
+				five.setIcon(OG);
 			}
-		}); **/
+		});
 
 		roll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {

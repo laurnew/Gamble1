@@ -10,8 +10,7 @@ public class Scorecard {
 
 	static ArrayList<Integer> scoreRecord = new ArrayList<Integer>();
 	
-	
-	
+	int ifWon = 0;
 	static int money = 0;
 
 	/**
@@ -50,7 +49,12 @@ public class Scorecard {
 			else
 				scoreRecord.add(0);
 		}
-		return won;
+		if(won == 0){
+			won = (BET * -1);
+			money+= won;
+			return won; }
+		else
+			return won;
 		
 
 	}
@@ -110,7 +114,12 @@ public class Scorecard {
 			scoreRecord.add(won);
 			money += won;
 		}
-		return won;
+		if(won == 0){
+			won = (BET * -1);
+			money += 1;
+			return won;}
+		else
+			return won;
 	}
 
 	/**
