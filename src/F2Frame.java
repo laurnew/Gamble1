@@ -1,15 +1,24 @@
 
 import java.awt.Component;
+
+/**
+ * @author Lauren Weiser, Emma Delucchi, Katrina Baber
+ * 4/24/2017, Gamble
+ * F2Frame sets up the frame and buttons
+ */
 import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
 
 public class F2Frame extends JFrame {
+
+	/** the variables are initialized **/
+
 	private String keepThis = "nnnnn";
 	private String keepBefore = "";
 	private String keepAfter = "";
 	private JPanel dieOne;
-	
+
 	ArrayList<Integer> scorecard = new ArrayList<Integer>(13);
 
 	int flag = 0;
@@ -20,12 +29,15 @@ public class F2Frame extends JFrame {
 	Dice dice = new Dice();
 
 	public F2Frame() {
-		
-		for (int j = 0; j < 13; j++){
+
+		for (int j = 0; j < 13; j++) {
 			scorecard.add(0);
 		}
-		
+
+		/** the size of the frame is set **/
 		setSize(700, 500);
+
+		/** the icon images of the dice are created **/
 		ImageIcon OG;
 		ImageIcon icon = new ImageIcon(getClass().getResource("1.png"));
 		ImageIcon icon2 = new ImageIcon(getClass().getResource("2.png"));
@@ -36,6 +48,7 @@ public class F2Frame extends JFrame {
 		int numOfRolls = 4;
 		int numOfDie = 5;
 
+		/** the dice are rolled and displayed **/
 		Hand myHand = new Hand();
 		myHand.setNumOfDie(numOfDie);
 		myHand.setNumOfTurnLeft(numOfRolls);
@@ -121,23 +134,17 @@ public class F2Frame extends JFrame {
 			OG = icon6;
 		}
 		JButton five = new JButton(OG);
+
+		/** buttons to re-roll or start a new hand are created **/
 		JButton roll = new JButton("re-roll!!");
-		
+
 		JButton newHand = new JButton("start a new hand");
-		
-		
-		
 
 		String betAmount = JOptionPane.showInputDialog(null, "How much would you like to bet?");
 		String lineBet = JOptionPane.showInputDialog(null, "Which line (1-13) would you like to bet on?");
-		
+
 		bet = Integer.parseInt(betAmount); // gets int value of player's bet
 		line = Integer.parseInt(lineBet);
-		
-		
-		
-
-		
 
 		int totalmoney = score.money;
 
@@ -145,8 +152,9 @@ public class F2Frame extends JFrame {
 			betAmount = JOptionPane.showInputDialog(null, "How much would you like to bet?");
 			bet = Integer.parseInt(betAmount);
 		}
-		
-		
+
+		/** buttons are added to panel, panel to frame **/
+
 		dieOne = new JPanel();
 		dieOne.add(one);
 		dieOne.add(two);
@@ -166,9 +174,13 @@ public class F2Frame extends JFrame {
 		three.addActionListener(Three);
 		four.addActionListener(Four);
 		five.addActionListener(Five);
-		
-		newHand.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent event){
+
+		/**
+		 * action listener is created for the new hand button and the corrected
+		 * icon is shown depending the dice
+		 **/
+		newHand.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
 				myHand.keepHand(keepThis);
 				keepThis = "nnnnn";
 				myHand.setCurrentHand(6);
@@ -257,33 +269,40 @@ public class F2Frame extends JFrame {
 			}
 		});
 
+		/**
+		 * the action listener for the re-roll is created
+		 * 
+		 */
 		roll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				flag += 1;
-				
-				if (flag <= 2){
+
+				if (flag <= 2) {
 					flag++;
 				}
 
 				JLabel scoremoney = new JLabel("Current Money");
 				JPanel showscore = new JPanel();
-				
-				if (flag > 2){
-					for(int l = 0; l < 13; l++){
-						if (line == l){
+
+				/**
+				 * a hand has three rolls after those three rolls the score is
+				 * added to an array and the user sees how much money they have
+				 */
+				if (flag > 2) {
+					for (int l = 0; l < 13; l++) {
+						if (line == l) {
 							Scorecard.upperSection(hand, numOfDie, 6, bet, l);
 							Scorecard.lowerSection(hand, 6, numOfDie, bet, l);
 							scorecard.add(l, Scorecard.scoreRecord.get(l));
 						}
 					}
 					JOptionPane.showInputDialog(null, "The hand has ended. You have $" + score.money);
-					
+
 					String lineBet = JOptionPane.showInputDialog(null, "Which line (1-13) would you like to bet on?");
 					line = Integer.parseInt(lineBet);
 					flag = 0;
 				}
-				
-				
+
 				myHand.keepHand(keepThis);
 				keepThis = "nnnnn";
 				myHand.setCurrentHand(6);
@@ -369,13 +388,18 @@ public class F2Frame extends JFrame {
 					OG = icon6;
 				}
 				five.setIcon(OG);
-				
+
 			}
 
 		});
 
 	}
 
+	/**
+	 * ColorAction records which dice the user will keep or re-roll
+	 * 
+	 *
+	 */
 	private class ColorAction implements ActionListener {
 		private int num;
 
@@ -435,22 +459,4 @@ public class F2Frame extends JFrame {
 		}
 	}
 
-}
-
-class MyComboBoxRenderer extends JLabel implements ListCellRenderer {
-	private String _title;
-
-	public MyComboBoxRenderer(String title) {
-		_title = title;
-	}
-
-	@Override
-	public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
-			boolean hasFocus) {
-		if (index == -1 && value == null)
-			setText(_title);
-		else
-			setText(value.toString());
-		return this;
-	}
 }

@@ -6,17 +6,17 @@ import java.util.Scanner;
 import javax.swing.JLabel;
 
 /**
- * @author Lauren Weiser, Emma Delucchi, Katrina Baber The Hand class sets the
- *         hand in Yahtzee, displays it, and takes user input to determine which
- *         die are to be re-rolled.
+ * @author Lauren Weiser, Emma Delucchi, Katrina Baber 4/24/2017, Gamble The
+ *         Hand class sets the hand in Yahtzee, displays it, and takes user
+ *         input to determine which die are to be re-rolled.
  */
 public class Hand {
 	/**
 	 * initializes objects in Hand class
 	 */
-	
+
 	Scorecard score = new Scorecard();
-	
+
 	public Hand() {
 		numOfTurnsLeft = 0; // default
 		numOfDie = 0;
@@ -69,7 +69,7 @@ public class Hand {
 		}
 
 		char keepThis = keepDie.charAt(0);
-		
+
 		Boolean allYes = true;
 		for (int i = 0; i < numOfDie; i++) {
 			keepThis = keepDie.charAt(i);
@@ -80,7 +80,7 @@ public class Hand {
 				hand.set(i, newDice);
 			}
 		}
-		
+
 		if (allYes) {
 			handComplete = true; // if they keep all die
 			numOfTurnsLeft = 1; // increments to 0 at end of loop

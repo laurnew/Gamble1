@@ -10,8 +10,8 @@ import javax.swing.JFrame;
 
 /**
  * 
- * @author Lauren Weiser, Emma Delucchi, Katrina Baber Main class plays a game
- *         of Gamble
+ * @author Lauren Weiser, Emma Delucchi, Katrina Baber 4/24/2017, Gamble Main
+ *         class plays a game of Gamble
  *
  */
 
@@ -22,31 +22,29 @@ public class Main {
 	static Dice dice = new Dice();
 
 	static Scorecard scorecard = new Scorecard();
-	
-	
-	
-	
+
 	/**
 	 * 
 	 * @param args
 	 * 
 	 */
 	public static void main(String[] args) {
-		
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-			JFrame frame = new F2Frame();
-			frame.setTitle("Don't think...Gamble!!");
-			frame.setLocation(400, 100);
-			frame.setVisible(true);
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);}
-			});
-		
-		
+				JFrame start = new startFrame();
+				start.setTitle("Get ready to play!");
+				start.setLocation(400,100);
+				start.setVisible(true);
+				start.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				
+				
+			}
+		});
+
 		int numOfSides = 6;
 		int numOfRolls = 4;
 		int numOfDie = 5;
-
 
 		Hand myHand = new Hand();
 		myHand.setNumOfDie(numOfDie);
@@ -96,8 +94,6 @@ public class Main {
 
 			}
 			flag2 = false;
-			
-			
 
 			/** resets hand each time they play a new game **/
 			myHand = new Hand();
@@ -113,14 +109,9 @@ public class Main {
 			myScorecard.lowerSection(hand, numOfSides, numOfDie, bet1, line1);
 			// myScorecard.printPossible(); prints the current hands options
 			myHand.gameComplete();
-			
-			
+
 		}
-		
-		
 
 	}
-	
-	
 
 }

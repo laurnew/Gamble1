@@ -2,14 +2,15 @@
 import java.util.ArrayList;
 
 /**
- * @author Lauren Weiser, Emma Delucchi, Katrina Baber The Scorecard class uses
- *         the hand from the user's Yahtzee game to calculate the user's score
- *         on each line of the scorecard and display it
+ * @author Lauren Weiser, Emma Delucchi, Katrina Baber 4/24/2017, Gamble The
+ *         Scorecard class uses the hand from the user's Yahtzee game to
+ *         calculate the user's score on each line of the scorecard and display
+ *         it
  */
 public class Scorecard {
 
 	static ArrayList<Integer> scoreRecord = new ArrayList<Integer>();
-	
+
 	int ifWon = 0;
 	static int money = 0;
 
@@ -17,15 +18,18 @@ public class Scorecard {
 	 * initializes the Scorecard class
 	 */
 	public Scorecard() {
-		for (int j = 0; j < 13; j++){
+		for (int j = 0; j < 13; j++) {
 			scoreRecord.add(0);
 		}
 	}
 
 	/**
 	 * calculates total score of upper section and prints scores of each line
-	 * 
-	 * @param array
+	 * @param hand
+	 * @param numOfDie
+	 * @param numOfSides
+	 * @param BET
+	 * @param lineBet
 	 *            containing the player's hand, number of dice, number of sides
 	 * @returns total upper section score
 	 */
@@ -45,25 +49,27 @@ public class Scorecard {
 				won = dieValue * currentCount * BET;
 				scoreRecord.add(won);
 				money += won;
-			}
-			else
+			} else
 				scoreRecord.add(0);
 		}
-		if(won == 0){
+		if (won == 0) {
 			won = (BET * -1);
-			money+= won;
-			return won; }
-		else
+			money += won;
 			return won;
-		
+		} else
+			return won;
 
 	}
 
 	/**
-	 * calculates total score of lower section
+	 * calculates total score of lower section containing 
+	 * the player's hand, number of sides, number of dice
 	 * 
-	 * @param array
-	 *            containing the player's hand, number of sides, number of dice
+	 * @param hand
+	 * @param numOfDie
+	 * @param numOfSides
+	 * @param BET
+	 * @param betline
 	 * @return total lower section score
 	 */
 	public static int lowerSection(ArrayList<Dice> hand, int numOfSides, int numOfDie, int BET, int betline) {
@@ -73,60 +79,53 @@ public class Scorecard {
 			won = threeOfAKind(hand, numOfDie, numOfSides, BET);
 			scoreRecord.add(won);
 			money += won;
-		}
-		else if (betline != start) {
+		} else if (betline != start) {
 			scoreRecord.add(0);
-		} 
-		else if (betline == start + 1) {
+		} else if (betline == start + 1) {
 			won = fourOfAKind(hand, numOfDie, numOfSides, BET);
 			scoreRecord.add(won);
 			money += won;
-		}
-		else if (betline != start + 1 ) {
+		} else if (betline != start + 1) {
 			scoreRecord.add(0);
-		}
-		 else if (betline == start + 2) {
+		} else if (betline == start + 2) {
 			won = scoreFullHouse(hand, numOfSides, numOfDie, BET);
 			scoreRecord.add(won);
 			money += won;
-		} 
-		 else if (betline != start + 2 ) {
-				scoreRecord.add(0);
-		}
-		 else if (betline == start + 3) {
+		} else if (betline != start + 2) {
+			scoreRecord.add(0);
+		} else if (betline == start + 3) {
 			won = smallStraight(hand, numOfDie, BET);
 			scoreRecord.add(won);
 			money += won;
-		} 
-		 else if (betline != start + 3 ) {
-				scoreRecord.add(0);
-		}
-		 else if (betline == start + 4) {
+		} else if (betline != start + 3) {
+			scoreRecord.add(0);
+		} else if (betline == start + 4) {
 			won = largeStraight(hand, numOfDie, BET);
 			scoreRecord.add(won);
 			money += won;
-		}
-		 else if (betline != start + 4 ) {
-				scoreRecord.add(0);
-			}
-		 else {
+		} else if (betline != start + 4) {
+			scoreRecord.add(0);
+		} else {
 			won = YAHTZEE(hand, numOfDie, BET);// Yahtzee!!
 			scoreRecord.add(won);
 			money += won;
 		}
-		if(won == 0){
+		if (won == 0) {
 			won = (BET * -1);
 			money += 1;
-			return won;}
-		else
+			return won;
+		} else
 			return won;
 	}
 
 	/**
 	 * calculates and displays score for three of a kind line
-	 * 
-	 * @param array
-	 *            containing the player's hand, number of dice, number of sides
+	 * containing the player's hand, number of dice, number of sides
+	 * @param hand
+	 * @param numOfDie
+	 * @param numOfSides
+	 * @param BET
+	 *            
 	 * @return score for that line
 	 */
 	public static int threeOfAKind(ArrayList<Dice> hand, int numOfDie, int numOfSides, int BET) {
@@ -154,9 +153,12 @@ public class Scorecard {
 
 	/**
 	 * calculates and displays score for four of a kind line
-	 * 
-	 * @param array
-	 *            containing the player's hand, number of dice, number of sides
+	 * containing the player's hand, number of dice, number of sides
+	 * @param hand
+	 * @param numOfDie
+	 * @param numOfSides
+	 * @param BET
+	 *            
 	 * @return score for that line
 	 */
 	public static int fourOfAKind(ArrayList<Dice> hand, int numOfDie, int numOfSides, int BET) {
@@ -185,9 +187,12 @@ public class Scorecard {
 
 	/**
 	 * calculates and displays score for full house line
-	 * 
-	 * @param array
-	 *            containing the player's hand, number of sides, number of die
+	 * containing the player's hand, number of sides, number of die
+	 *@param hand
+	 * @param numOfDie
+	 * @param numOfSides
+	 * @param BET
+	 *            
 	 * @return score for that line
 	 */
 	public static int scoreFullHouse(ArrayList<Dice> hand, int numOfSides, int numOfDie, int BET) {
@@ -228,9 +233,12 @@ public class Scorecard {
 
 	/**
 	 * calculates and displays score for small straight line
-	 * 
-	 * @param array
-	 *            containing the player's hand, number of dice
+	 * containing the player's hand, number of dice
+	 * @param hand
+	 * @param numOfDie
+	 * @param numOfSides
+	 * @param BET
+	 *            
 	 * @return score for that line
 	 */
 	public static int smallStraight(ArrayList<Dice> hand, int numOfDie, int BET) {
@@ -260,9 +268,12 @@ public class Scorecard {
 
 	/**
 	 * calculates and displays score for large straight line
-	 * 
-	 * @param array
-	 *            containing the player's hand, number of die
+	 * containing the player's hand, number of die
+	 * @param hand
+	 * @param numOfDie
+	 * @param numOfSides
+	 * @param BET
+	 *            
 	 * @return score for that line
 	 */
 	public static int largeStraight(ArrayList<Dice> hand, int numOfDie, int BET) {
@@ -291,9 +302,12 @@ public class Scorecard {
 
 	/**
 	 * calculates and displays score for yahtzee line
-	 * 
-	 * @param array
-	 *            containing the player's hand, number of die
+	 * containing the player's hand, number of die
+	 *  @param hand
+	 * @param numOfDie
+	 * @param numOfSides
+	 * @param BET
+	 *            
 	 * @return score for that line
 	 */
 	public static int YAHTZEE(ArrayList<Dice> hand, int numOfDie, int BET) {
