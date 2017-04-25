@@ -10,6 +10,8 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
 
+import javafx.scene.paint.Color;
+
 public class F2Frame extends JFrame {
 
 	/** the variables are initialized **/
@@ -18,6 +20,7 @@ public class F2Frame extends JFrame {
 	private String keepBefore = "";
 	private String keepAfter = "";
 	private JPanel dieOne;
+	String betAmount = "";
 
 	ArrayList<Integer> scorecard = new ArrayList<Integer>(13);
 
@@ -136,12 +139,12 @@ public class F2Frame extends JFrame {
 		JButton five = new JButton(OG);
 
 		/** buttons to re-roll or start a new hand are created **/
-		JButton roll = new JButton("re-roll!!");
+		JButton roll = new JButton("Re-roll!!");
 
 		JButton newHand = new JButton("Start a New Hand");
 		JButton endGame = new JButton("End Game");
 
-		String betAmount = JOptionPane.showInputDialog(null, "How much would you like to bet?");
+		betAmount = JOptionPane.showInputDialog(null, "How much would you like to bet?");
 		String lineBet = JOptionPane.showInputDialog(null, "Which line (1-13) would you like to bet on?");
 
 		bet = Integer.parseInt(betAmount); // gets int value of player's bet
@@ -316,6 +319,8 @@ public class F2Frame extends JFrame {
 
 					String lineBet = JOptionPane.showInputDialog(null, "Which line (1-13) would you like to bet on?");
 					line = Integer.parseInt(lineBet);
+					betAmount = JOptionPane.showInputDialog(null, "How much would you like to bet?");
+					bet = Integer.parseInt(betAmount);
 					while (line >13 || line < 1) {
 						lineBet = JOptionPane.showInputDialog(null, "Please enter a number between 1 and 13:");
 						line = Integer.parseInt(lineBet);

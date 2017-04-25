@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import javafx.scene.paint.Color;
+import java.awt.color.*;
 
 /**
  * 
@@ -23,6 +24,7 @@ public class startFrame extends JFrame {
 	public startFrame() {
 
 		setSize(1000, 700);
+		//setBackground(Color.CORNFLOWERBLUE);
 		JButton startButton = new JButton("Start the game!!!");
 		ImageIcon gamble = new ImageIcon(getClass().getResource("gamble.png"));
 		JLabel label =  new JLabel("", gamble, JLabel.CENTER);

@@ -13,6 +13,7 @@ public class Scorecard {
 
 	int ifWon = 0;
 	static int money = 0;
+	static int moneyWon = 0;
 
 	/**
 	 * initializes the Scorecard class
@@ -53,8 +54,8 @@ public class Scorecard {
 				scoreRecord.add(0);
 		}
 		if (won == 0) {
-			won = (BET * -1);
-			money += won;
+			moneyWon = (BET * -1);
+			money += moneyWon;
 			return won;
 		} else
 			return won;
@@ -111,8 +112,8 @@ public class Scorecard {
 			money += won;
 		}
 		if (won == 0) {
-			won = (BET * -1);
-			money += 1;
+			moneyWon = (BET * -1);
+			money += moneyWon;
 			return won;
 		} else
 			return won;
