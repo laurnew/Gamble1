@@ -145,7 +145,8 @@ public class F2Frame extends JFrame {
 		JButton endGame = new JButton("End Game");
 
 		betAmount = JOptionPane.showInputDialog(null, "How much would you like to bet?");
-		String lineBet = JOptionPane.showInputDialog(null, "Which line (1-13) would you like to bet on?");
+		String lineBet = JOptionPane.showInputDialog(null, "Which line (1-13) would you like to bet on?" +
+				 "\n 1, 2, 3, 4, 5, 6, 3 of a kind, 4 of a kind, full house, small straight, large straight, yahtzee");
 
 		bet = Integer.parseInt(betAmount); // gets int value of player's bet
 		line = Integer.parseInt(lineBet);
@@ -317,7 +318,8 @@ public class F2Frame extends JFrame {
 					}
 					JOptionPane.showMessageDialog(null, "The hand has ended. You have $" + score.money);
 
-					String lineBet = JOptionPane.showInputDialog(null, "Which line (1-13) would you like to bet on?");
+					String lineBet = JOptionPane.showInputDialog(null, "Which line (1-13) would you like to bet on?" +
+							 "\n 1, 2, 3, 4, 5, 6, 3 of a kind, 4 of a kind, full house, small straight, large straight, yahtzee");
 					line = Integer.parseInt(lineBet);
 					betAmount = JOptionPane.showInputDialog(null, "How much would you like to bet?");
 					bet = Integer.parseInt(betAmount);
