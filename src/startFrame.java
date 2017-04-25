@@ -1,9 +1,13 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import javafx.scene.paint.Color;
 
 /**
  * 
@@ -18,17 +22,20 @@ import javax.swing.JPanel;
 public class startFrame extends JFrame {
 	public startFrame() {
 
-		setSize(700, 500);
+		setSize(1000, 700);
 		JButton startButton = new JButton("Start the game!!!");
-
+		ImageIcon gamble = new ImageIcon(getClass().getResource("gamble.png"));
+		JLabel label =  new JLabel("", gamble, JLabel.CENTER);
 		JPanel startPanel = new JPanel();
-
+		startPanel.add(label);
 		startPanel.add(startButton);
 
 		add(startPanel);
 
 		startButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
+				dispose();
+				
 				JFrame frame = new F2Frame();
 				frame.setTitle("Don't think...Gamble!!");
 				frame.setLocation(400, 100);

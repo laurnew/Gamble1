@@ -35,7 +35,7 @@ public class F2Frame extends JFrame {
 		}
 
 		/** the size of the frame is set **/
-		setSize(700, 500);
+		setSize(1000, 700);
 
 		/** the icon images of the dice are created **/
 		ImageIcon OG;
@@ -301,7 +301,7 @@ public class F2Frame extends JFrame {
 							scorecard.add(l, Scorecard.scoreRecord.get(l));
 						}
 					}
-					JOptionPane.showInputDialog(null, "The hand has ended. You have $" + score.money);
+					JOptionPane.showMessageDialog(null, "The hand has ended. You have $" + score.money);
 
 					String lineBet = JOptionPane.showInputDialog(null, "Which line (1-13) would you like to bet on?");
 					line = Integer.parseInt(lineBet);
