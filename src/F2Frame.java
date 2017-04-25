@@ -138,7 +138,8 @@ public class F2Frame extends JFrame {
 		/** buttons to re-roll or start a new hand are created **/
 		JButton roll = new JButton("re-roll!!");
 
-		JButton newHand = new JButton("start a new hand");
+		JButton newHand = new JButton("Start a New Hand");
+		JButton endGame = new JButton("End Game");
 
 		String betAmount = JOptionPane.showInputDialog(null, "How much would you like to bet?");
 		String lineBet = JOptionPane.showInputDialog(null, "Which line (1-13) would you like to bet on?");
@@ -168,6 +169,7 @@ public class F2Frame extends JFrame {
 		dieOne.add(five);
 		dieOne.add(roll);
 		dieOne.add(newHand);
+		dieOne.add(endGame);
 		add(dieOne);
 		ColorAction One = new ColorAction(1);
 		ColorAction Two = new ColorAction(2);
@@ -271,6 +273,15 @@ public class F2Frame extends JFrame {
 					OG = icon6;
 				}
 				five.setIcon(OG);
+			}
+		});
+		
+		/** the action listener for the end game button
+		 * is created
+		 */
+		endGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event){
+				System.exit(0);
 			}
 		});
 

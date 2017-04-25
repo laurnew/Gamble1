@@ -39,6 +39,7 @@ public class startFrame extends JFrame {
 				JFrame frame = new F2Frame();
 				frame.setTitle("Don't think...Gamble!!");
 				frame.setLocation(400, 100);
+				//frame.getContentPane().setBackground(Color.CORNFLOWERBLUE)
 				frame.setVisible(true);
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			}
