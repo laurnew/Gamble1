@@ -1,4 +1,4 @@
-
+import java.util.ArrayList;
 import java.awt.Component;
 
 /**
@@ -23,6 +23,7 @@ public class F2Frame extends JFrame {
 	String betAmount = "";
 
 	ArrayList<Integer> scorecard = new ArrayList<Integer>(13);
+	
 
 	int flag = 0;
 	int bet = 0;
@@ -30,6 +31,9 @@ public class F2Frame extends JFrame {
 
 	Scorecard score = new Scorecard();
 	Dice dice = new Dice();
+	TopTen topTen = new TopTen();
+	
+	ArrayList<String> list = TopTen.text;
 
 	public F2Frame() {
 
@@ -145,14 +149,14 @@ public class F2Frame extends JFrame {
 		JButton endGame = new JButton("End Game");
 
 		betAmount = JOptionPane.showInputDialog(null, "How much would you like to bet?");
-		String lineBet = JOptionPane.showInputDialog(null, "Which line (1-13) would you like to bet on?"
+		String lineBet = JOptionPane.showInputDialog(null, "Which line (1-12) would you like to bet on?"
 				+ "\n 1, 2, 3, 4, 5, 6, 3 of a kind, 4 of a kind, full house, small straight, large straight, yahtzee");
 
 		bet = Integer.parseInt(betAmount); // gets int value of player's bet
 		line = Integer.parseInt(lineBet);
 
 		while (line > 13 || line < 1) {
-			lineBet = JOptionPane.showInputDialog(null, "Please enter a number between 1 and 13:");
+			lineBet = JOptionPane.showInputDialog(null, "Please enter a number between 1 and 12:");
 			line = Integer.parseInt(lineBet);
 		}
 
@@ -185,6 +189,7 @@ public class F2Frame extends JFrame {
 		three.addActionListener(Three);
 		four.addActionListener(Four);
 		five.addActionListener(Five);
+		
 
 		/**
 		 * action listener is created for the new hand button and the corrected

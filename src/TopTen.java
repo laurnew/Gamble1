@@ -42,15 +42,17 @@ public class TopTen {
 
 	/**
 	 * readtopten reads topten.txt and put the info into an array
+	 * @return 
 	 * 
 	 * @throws FileNotFoundException
 	 */
 
-	public static void readtopten() throws FileNotFoundException {
+	public static ArrayList<String> readtopten() throws FileNotFoundException {
 		Scanner sc = new Scanner(new File("src/topten.txt"));
 		while (sc.hasNextLine()) {
 			text.add(sc.nextLine());
 		}
+		return text;
 	}
 
 	/**

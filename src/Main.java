@@ -32,6 +32,7 @@ public class Main {
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
+				
 				JFrame start = new startFrame();
 				start.setTitle("Get ready to play!");
 				start.setLocation(400,100);
