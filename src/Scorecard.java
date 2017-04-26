@@ -14,6 +14,7 @@ public class Scorecard {
 	int ifWon = 0;
 	static int money = 0;
 	static int moneyWon = 0;
+	static int won;
 
 	/**
 	 * initializes the Scorecard class
@@ -35,31 +36,30 @@ public class Scorecard {
 	 * @returns total upper section score
 	 */
 	public static int upperSection(ArrayList<Dice> hand, int numOfDie, int numOfSides, int BET, int lineBet) {
-		int won = 0;
-		for (int dieValue = 1; dieValue <= numOfSides; dieValue++) { // num of
-																		// sides
-																		// + 1
+		won = 0;
+		for (int dieValue = 1; dieValue <= numOfSides; dieValue++) {
 			int currentCount = 0;
-			for (int diePosition = 0; diePosition < numOfDie - 1; diePosition++) { // num
-																					// of
-																					// sides
-				if (hand.get(diePosition).getRoll() == dieValue)
-					currentCount++;
+			for (int diePosition = 0; diePosition < numOfDie - 1; diePosition++) { 
+				if (hand.get(diePosition).getRoll() == dieValue){
+					currentCount++;}
 			}
 			if (dieValue == lineBet) {
+				//currentCount+=1;
 				won = dieValue * currentCount * BET;
-				scoreRecord.add(won);
-				money += won;
-			} else
+				return won;
+			} 
+			else
 				scoreRecord.add(0);
 		}
 		if (won == 0) {
-			moneyWon = (BET * -1);
-			money += moneyWon;
+			won = (BET * -1);
+			
 			return won;
-		} else
+		} 
+		else {
 			return won;
-
+		}
+		
 	}
 
 	/**
@@ -74,48 +74,60 @@ public class Scorecard {
 	 * @return total lower section score
 	 */
 	public static int lowerSection(ArrayList<Dice> hand, int numOfSides, int numOfDie, int BET, int betline) {
-		int won = 0;
-		int start = numOfDie + 1;
-		if (betline == start) {
+		won = 0;
+		int start = numOfDie + 2;
+		if (betline == 7) {
+			//System.out.println(won);
 			won = threeOfAKind(hand, numOfDie, numOfSides, BET);
-			scoreRecord.add(won);
 			money += won;
-		} else if (betline != start) {
-			scoreRecord.add(0);
-		} else if (betline == start + 1) {
+			//return won;
+		} //else if (betline != start) {
+			//scoreRecord.add(0);} 
+		else if (betline == start + 1) {
 			won = fourOfAKind(hand, numOfDie, numOfSides, BET);
 			scoreRecord.add(won);
 			money += won;
-		} else if (betline != start + 1) {
-			scoreRecord.add(0);
-		} else if (betline == start + 2) {
+			//return won;
+		} //else if (betline != start + 1) {
+			//scoreRecord.add(0);}
+		 else if (betline == start + 2) {
 			won = scoreFullHouse(hand, numOfSides, numOfDie, BET);
 			scoreRecord.add(won);
 			money += won;
-		} else if (betline != start + 2) {
-			scoreRecord.add(0);
-		} else if (betline == start + 3) {
+			//return won;
+		} //else if (betline != start + 2) {
+			//scoreRecord.add(0);}
+		 else if (betline == start + 3) {
 			won = smallStraight(hand, numOfDie, BET);
 			scoreRecord.add(won);
-			money += won;
-		} else if (betline != start + 3) {
-			scoreRecord.add(0);
-		} else if (betline == start + 4) {
+			//return won;
+		 }
+		 //else if (betline != start + 3) {
+			//scoreRecord.add(0);}
+		 else if (betline == start + 4) {
 			won = largeStraight(hand, numOfDie, BET);
 			scoreRecord.add(won);
 			money += won;
-		} else if (betline != start + 4) {
-			scoreRecord.add(0);
-		} else {
-			won = YAHTZEE(hand, numOfDie, BET);// Yahtzee!!
-			scoreRecord.add(won);
-			money += won;
-		}
-		if (won == 0) {
-			moneyWon = (BET * -1);
-			money += moneyWon;
+			//return won;
+		} //else if (betline != start + 4) {
+			//scoreRecord.add(0);}
+		 else {
+				won = YAHTZEE(hand, numOfDie, BET);// Yahtzee!!
+				scoreRecord.add(won);
+				money += won;
+				//return won;
+			}
+		
+		 if (won == 0) {
+			won = (BET * -1);
+			//money += moneyWon;
+			//System.out.println(won);
 			return won;
-		} else
+		}
+		 
+		 else
+			//System.out.println(money);
+			//return money;
 			return won;
 	}
 
@@ -139,13 +151,14 @@ public class Scorecard {
 			if (hand.get(placeHolder).getRoll() == (hand.get(placeHolder + 1).getRoll())) {
 				numSame += 1;
 			} else {
-				if (numSame < 3) { // if they already have 3 they don't need
+				if (numSame < 2) { // if they already have 3 they don't need
 									// more in order
 					numSame = 0;
 				}
 			}
 		}
-		if (numSame >= 3) {
+		if (numSame >= 2) {
+			int newbet = BET * 2;
 			return BET * 2;
 		} else {
 			return 0;
@@ -173,14 +186,15 @@ public class Scorecard {
 			if (hand.get(placeHolder).getRoll() == (hand.get(placeHolder + 1).getRoll())) {
 				numSame += 1;
 			} else {
-				if (numSame < 4) { // if they already have 4 they dont need more
+				if (numSame < 3) { // if they already have 4 they dont need more
 									// in order
 					numSame = 0;
 				}
 			}
 		}
-		if (numSame >= 4) {
-			return BET * 2;
+		if (numSame >= 3) {
+			BET = BET * 2;
+			return BET;
 		} else {
 			return 0;
 		}
@@ -226,7 +240,8 @@ public class Scorecard {
 			currentCount = 0;
 		}
 		if ((threeOfKindFound && twoOfKindFound) || greaterKind) {
-			return 2 * BET;
+			BET = BET * 2;
+			return BET;
 		} else {
 			return 0;
 		}
@@ -261,11 +276,15 @@ public class Scorecard {
 			}
 		}
 		if (numInOrder >= 3) {
-			return 3 * BET;
+			System.out.println(BET);
+			BET = BET * 3;
+			System.out.println(BET);
+			return BET;
 		} else {
 			return 0;
 		}
-	}
+	} 
+	
 
 	/**
 	 * calculates and displays score for large straight line
@@ -295,7 +314,8 @@ public class Scorecard {
 			}
 		}
 		if (numInOrder >= 4) {
-			return 4 * BET;
+			BET = BET * 4;
+			return BET;
 		} else {
 			return 0;
 		}
@@ -324,7 +344,8 @@ public class Scorecard {
 			}
 		}
 		if (YAHTZEE) {
-			return 10 * BET;
+			BET = BET * 10;
+			return BET;
 		} else {
 			return 0;
 		}

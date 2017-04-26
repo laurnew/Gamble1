@@ -147,8 +147,11 @@ public class F2Frame extends JFrame {
 
 		JButton newHand = new JButton("Start a New Hand");
 		JButton endGame = new JButton("End Game");
-
+		
 		betAmount = JOptionPane.showInputDialog(null, "How much would you like to bet?");
+		while(!Hand.isNumeric(betAmount)){
+			betAmount = JOptionPane.showInputDialog(null, "Please enter a number:");
+		}
 		String lineBet = JOptionPane.showInputDialog(null, "Which line (1-12) would you like to bet on?"
 				+ "\n 1, 2, 3, 4, 5, 6, 3 of a kind, 4 of a kind, full house, small straight, large straight, yahtzee");
 
@@ -197,8 +200,9 @@ public class F2Frame extends JFrame {
 		 **/
 		newHand.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
+				
 				int turns = myHand.getNumOfTurnsLeft();
-				if (turns != 2) {
+				if (turns != 2 && turns != 0) {
 					JOptionPane.showMessageDialog(null,
 							"Error: you cannot restart hand until a current hand has ended");
 				} else {
@@ -296,6 +300,7 @@ public class F2Frame extends JFrame {
 		 */
 		endGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
+				JOptionPane.showMessageDialog(null, "You won $" + score.won + ". Goodbye!");
 				System.exit(0);
 			}
 		});
@@ -307,7 +312,7 @@ public class F2Frame extends JFrame {
 		roll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				flag += 1;
-
+				
 				if (flag <= 2) {
 					flag++;
 				}
@@ -320,22 +325,30 @@ public class F2Frame extends JFrame {
 				 * added to an array and the user sees how much money they have
 				 */
 				if (flag > 2) {
-					for (int l = 0; l < 13; l++) {
+					for (int l = 1; l < 13; l++) {
 						if (line == l) {
-							Scorecard.upperSection(hand, numOfDie, 6, bet, l);
-							Scorecard.lowerSection(hand, 6, numOfDie, bet, l);
-							scorecard.add(l, Scorecard.scoreRecord.get(l));
+							if(line <= 6)
+								score.won = Scorecard.upperSection(hand, 5, 6, bet, l);
+							else
+								score.won = Scorecard.lowerSection(hand, 6, 5, bet, l);
+							//scorecard.add(l, Scorecard.scoreRecord.get(l));
 						}
 					}
-					JOptionPane.showMessageDialog(null, "The hand has ended. You have $" + score.money);
+					
+					JOptionPane.showMessageDialog(null, "The hand has ended. You have $" + score.won);
 
-					String lineBet = JOptionPane.showInputDialog(null, "Which line (1-13) would you like to bet on?"
+					String lineBet = JOptionPane.showInputDialog(null, "Which line (1-12) would you like to bet on?"
 							+ "\n 1, 2, 3, 4, 5, 6, 3 of a kind, 4 of a kind, full house, small straight, large straight, yahtzee");
 					line = Integer.parseInt(lineBet);
 					betAmount = JOptionPane.showInputDialog(null, "How much would you like to bet?");
+					while(!Hand.isNumeric(betAmount)){
+						betAmount = JOptionPane.showInputDialog(null, "Please enter a number:");
+					}
+					
 					bet = Integer.parseInt(betAmount);
+					
 					while (line > 13 || line < 1) {
-						lineBet = JOptionPane.showInputDialog(null, "Please enter a number between 1 and 13:");
+						lineBet = JOptionPane.showInputDialog(null, "Please enter a number between 1 and 12:");
 						line = Integer.parseInt(lineBet);
 					}
 					flag = 0;
